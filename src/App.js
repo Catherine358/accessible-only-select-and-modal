@@ -127,6 +127,7 @@ function App() {
         if (e.key === 'Escape') {
             setIsModalOpen(false);
             setAddress('');
+            document.getElementById('dialog-btn')?.focus();
         }
     };
 
@@ -192,7 +193,9 @@ function App() {
                   )}
               </ul>
           </div>
-          <button onClick={(e) => {
+          <button
+              id={'dialog-btn'}
+              onClick={(e) => {
               e.preventDefault();
               setIsModalOpen(prevState => !prevState);
           }}>
@@ -231,6 +234,7 @@ function App() {
                             setIsModalOpen(false);
                             setAddress('');
                           }}
+                          onKeyDown={handleInputKeyDown}
                       >
                           Send
                       </button>
