@@ -18,14 +18,9 @@ function App() {
             setSelectedValue(value);
         }
         setIsDropdownOpen(false);
+        setActiveDescendant(null);
+        setActiveIndex(-1);
     };
-
-    useEffect(() => {
-            return () => {
-                setActiveDescendant(null);
-                setActiveIndex(-1);
-            };
-    }, []);
 
     useEffect(() => {
         if (inputRef && isModalOpen) {
@@ -104,6 +99,8 @@ function App() {
             case 'Esc':
                 e.preventDefault();
                 setIsDropdownOpen(false);
+                setActiveDescendant(null);
+                setActiveIndex(-1);
                 break;
             default:
                 break;
@@ -201,10 +198,10 @@ function App() {
           }}>
               Open Modal
           </button>
+              <div className={`modal-overlay ${isModalOpen && 'open'}`}>
           <div
               role="dialog"
               id="dialog"
-              className={isModalOpen && 'open'}
               aria-labelledby="dialog-label"
               aria-modal="true"
           >
@@ -227,7 +224,7 @@ function App() {
                   />
                   <div className="btn-container">
                       <button
-                          className="ui icon button"
+                          className="ui icon button send"
                           name="send"
                           onClick={(e) => {
                             e.preventDefault();
@@ -239,7 +236,7 @@ function App() {
                           Send
                       </button>
                       <button
-                          className="ui icon button"
+                          className="ui icon button cancel"
                           name="cancel"
                           onClick={(e) => {
                               e.preventDefault();
@@ -253,6 +250,7 @@ function App() {
                   </div>
               </form>
           </div>
+              </div>
           </div>
       </div>
   );

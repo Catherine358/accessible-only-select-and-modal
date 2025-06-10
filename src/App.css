@@ -7,31 +7,49 @@
     height: 100%;
 }
 
+.dropdown-select-container {
+    position: relative;
+    display: inline-block;
+}
+
 .dropdown-select-control {
-  display: flex;
     width: 200px;
   height: 40px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.125rem;
-  border: none;
-  border-radius: 4px;
   position: relative;
     margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    min-width: 200px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+        outline: 2px solid blueviolet;
+    }
 }
 
 .menu {
-  z-index: 13;
   position: absolute;
-  padding: 10px;
-  border-radius: 4px;
-  top: 20px;
   opacity: 0;
   transition: opacity 0.3s ease;
   visibility: hidden;
   list-style: none;
   width: 200px;
-  border: 1px solid saddlebrown;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    margin-top: 0.25rem;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    min-width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 .menu.open {
@@ -41,13 +59,11 @@
 }
 
 .item {
-    padding: 4px 8px;
     cursor: pointer;
     list-style: none;
-
-    &:hover {
-      background: gray;
-    }
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
 
     &:focus,
     &.focused {
@@ -59,25 +75,73 @@
     }
 }
 
-#dialog {
-    position: absolute;
+.item:hover,
+.item[aria-selected="true"],
+.item.active {
+    background-color: #f0f8ff;
+}
+
+#dialog-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-left: 20px;
+}
+
+#dialog-btn:hover {
+    background-color: #0056b3;
+}
+
+#dialog-btn:focus {
+    outline: 2px solid blueviolet;
+}
+
+.modal-overlay {
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
-    flex-direction: column;
     align-items: center;
-    border: 1px solid saddlebrown;
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 10px;
+    justify-content: center;
+    z-index: 1000;
     opacity: 0;
     transition: opacity 0.3s ease;
     visibility: hidden;
 }
 
-#dialog.open {
+#dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+
+    background: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay.open {
     opacity: 1;
     transition: opacity 0.3s ease;
     visibility: visible;
+}
+
+h6 {
+    margin-top: 0;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
 }
 
 .form {
@@ -85,13 +149,18 @@
     flex-direction: column;
 }
 
-.input {
-    height: 40px;
-    border: none;
-    border-radius: 4px;
+input {
+    height: 20px;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+    margin-bottom: 1.5rem;
+    margin-top: 10px;
 }
 
-.input:focus {
+input:focus {
     outline: 2px solid blueviolet;
 }
 
@@ -99,5 +168,52 @@
     display: flex;
     justify-content: flex-end;
     margin: 10px 0;
+    gap: 0.75rem;
+}
+
+.ui.button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.4rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cancel {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.cancel:hover {
+    background-color: #ccc;
+}
+
+.cancel:focus {
+    outline: 2px solid blueviolet;
+}
+
+.send {
+    background-color: #28a745;
+    color: white;
+}
+
+.send:hover {
+    background-color: #218838;
+}
+
+.send:focus {
+    outline: 2px solid blueviolet;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
