@@ -172,18 +172,18 @@ function App() {
                   {options.map((opt, index) =>
                       <li
                           key={opt}
-                          role="option"
                           className={`item
                                   ${index === activeIndex && 'focused'}
                                   ${
                               opt === selectedValue && 'selected'
                           }
                               `}
-                          aria-selected={index === activeIndex}
                           id={opt}
                           onClick={() => {
                               select(opt);
                           }}
+                          role="option"
+                          aria-selected={opt === selectedValue}
                       >
                           <span> {opt}</span>
                       </li>
