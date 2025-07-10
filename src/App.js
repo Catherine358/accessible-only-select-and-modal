@@ -179,12 +179,11 @@ function App() {
                               opt === selectedValue && 'selected'
                           }
                               `}
-                          aria-selected={index === activeIndex}
                           id={opt}
                           onClick={() => {
                               select(opt);
                           }}
-                          aria-selected={option === selectedValue}
+                          aria-selected={opt === selectedValue}
                       >
                           <span> {opt}</span>
                       </li>
