@@ -184,6 +184,7 @@ function App() {
                           onClick={() => {
                               select(opt);
                           }}
+                          aria-selected={option === selectedValue}
                       >
                           <span> {opt}</span>
                       </li>
