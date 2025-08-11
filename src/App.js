@@ -1,5 +1,6 @@
 import './App.css';
 import {useState, useEffect, useRef} from "react";
+import AccessibleCheckbox from "./AccessibleCheckbox";
 
 function App() {
 
@@ -144,16 +145,17 @@ function App() {
                       e.preventDefault();
                       setIsDropdownOpen(prevState => !prevState);
                   }}
-                  role="combobox"
-                  aria-expanded={isDropdownOpen}
-                  aria-haspopup="listbox"
                   className={`dropdown-select-control ${isDropdownOpen && 'open'}
                       ${options.length === 0 && 'disabled'}`}
                   id={'only-select-dropdown'}
-                  aria-controls={'listbox'}
-                  aria-activedescendant={activeDescendant}
+                  aria-labelledby={'dropdown-placeholder'}
                   disabled={options.length === 0}
                   aria-disabled={options.length === 0}
+                  role="combobox"
+                  aria-expanded={isDropdownOpen}
+                  aria-haspopup="listbox"
+                  aria-controls={'listbox'}
+                  aria-activedescendant={activeDescendant}
                   onKeyDown={handleKeyDown}
               >
                       <span id={'dropdown-placeholder'} className="dropdown-select__placeholder">
@@ -164,10 +166,10 @@ function App() {
                   className={`menu transition visible'
                       ${isDropdownOpen && 'open'}`}
                   aria-labelledby={'dropdown-placeholder'}
-                  role="listbox"
                   id="listbox"
                   tabIndex={-1}
                   aria-multiselectable={false}
+                  role="listbox"
               >
                   {options.map((opt, index) =>
                       <li
@@ -200,9 +202,9 @@ function App() {
           </button>
               <div className={`modal-overlay ${isModalOpen && 'open'}`}>
           <div
-              role="dialog"
               id="dialog"
               aria-labelledby="dialog-label"
+              role="dialog"
               aria-modal="true"
           >
               <h6 id="dialog-label">Fill out your address</h6>
@@ -252,6 +254,7 @@ function App() {
           </div>
               </div>
           </div>
+          <AccessibleCheckbox />
       </div>
   );
 }
