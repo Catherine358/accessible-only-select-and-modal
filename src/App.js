@@ -1,6 +1,7 @@
 import './App.css';
-import {useState, useEffect, useRef} from "react";
+import {useState} from "react";
 import AccessibleCheckbox from "./AccessibleCheckbox";
+import AccessibleModal from "./AccessibleModal";
 
 function App() {
 
@@ -9,10 +10,6 @@ function App() {
     const [selectedValue, setSelectedValue] = useState('');
     const [activeIndex, setActiveIndex] = useState(-1);
     const options = ['Apple', 'Banana', 'Orange'];
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [address, setAddress] = useState('');
-    const inputRef = useRef(null);
-    const closeBtnRef = useRef(null);
 
     const select = (value) => {
         if (value) {
@@ -22,12 +19,6 @@ function App() {
         setActiveDescendant(null);
         setActiveIndex(-1);
     };
-
-    useEffect(() => {
-        if (inputRef && isModalOpen) {
-            inputRef.current.focus();
-        }
-    }, [inputRef, isModalOpen]);
 
     const handleKeyDown = (e) => {
         const isNavKey = [
@@ -96,41 +87,15 @@ function App() {
             case 'Tab':
                 select(options[activeIndex]);
                 break;
-            case 'Escape':
             case 'Esc':
+            case 'Escape':
                 e.preventDefault();
-                setIsDropdownOpen(false);
                 setActiveDescendant(null);
                 setActiveIndex(-1);
                 break;
             default:
                 break;
         }
-    };
-
-    const handleInputKeyDown = (e) => {
-        if (e.key === 'Tab') {
-            if (e.shiftKey) {
-                if (document.activeElement === inputRef.current) {
-                    e.preventDefault();
-                    closeBtnRef.current.focus();
-                }
-            } else {
-                if (document.activeElement === closeBtnRef.current) {
-                    e.preventDefault();
-                    inputRef.current.focus();
-                }
-            }
-        }
-        if (e.key === 'Escape') {
-            setIsModalOpen(false);
-            setAddress('');
-            document.getElementById('dialog-btn')?.focus();
-        }
-    };
-
-    const onChangeHandler = (e) => {
-        setAddress(e.target.value);
     };
 
   return (
@@ -192,67 +157,7 @@ function App() {
                   )}
               </ul>
           </div>
-          <button
-              id={'dialog-btn'}
-              onClick={(e) => {
-              e.preventDefault();
-              setIsModalOpen(prevState => !prevState);
-          }}>
-              Open Modal
-          </button>
-              <div className={`modal-overlay ${isModalOpen && 'open'}`}>
-          <div
-              id="dialog"
-              aria-labelledby="dialog-label"
-              role="dialog"
-              aria-modal="true"
-          >
-              <h6 id="dialog-label">Fill out your address</h6>
-              <form
-                  className="form"
-                  onSubmit={(e) => e.preventDefault()}
-              >
-                  <label id="label" htmlFor="input">
-                      Address:
-                  </label>
-                  <input
-                      id="input"
-                      type="text"
-                      maxLength="50"
-                      value={address}
-                      onInput={onChangeHandler}
-                      ref={inputRef}
-                      onKeyDown={handleInputKeyDown}
-                  />
-                  <div className="btn-container">
-                      <button
-                          className="ui icon button send"
-                          name="send"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setIsModalOpen(false);
-                            setAddress('');
-                          }}
-                          onKeyDown={handleInputKeyDown}
-                      >
-                          Send
-                      </button>
-                      <button
-                          className="ui icon button cancel"
-                          name="cancel"
-                          onClick={(e) => {
-                              e.preventDefault();
-                              setIsModalOpen(false);
-                          }}
-                          ref={closeBtnRef}
-                          onKeyDown={handleInputKeyDown}
-                      >
-                         Cancel
-                      </button>
-                  </div>
-              </form>
-          </div>
-              </div>
+              <AccessibleModal />
           </div>
           <AccessibleCheckbox />
       </div>
