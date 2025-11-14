@@ -293,13 +293,21 @@ div[role="checkbox"]:focus-visible .checkbox-visual {
 
 .tooltip-container {
     position: relative;
-    display: flex;
     height: 20px;
     align-items: center;
     align-self: flex-end;
     margin-bottom: 8px;
     margin-left: 18px;
-    cursor: pointer;
+    cursor: help;
+    border-bottom: 1px dotted #555;
+    padding-bottom: 1px;
+}
+
+.tooltip-container::after {
+    content: "ⓘ";
+    font-size: 12px;
+    margin-left: 4px;
+    color: #555;
 }
 
 .tooltip-text {
@@ -327,5 +335,6 @@ div[role="checkbox"]:focus-visible .checkbox-visual {
 
 .tooltip-wrapper {
     display: flex;
+    padding: 0 20px;
 }
 
