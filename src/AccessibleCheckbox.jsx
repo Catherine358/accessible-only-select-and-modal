@@ -1,31 +1,48 @@
 import {useState} from 'react';
 const AccessibleCheckbox = () => {
-    const [isChecked, setIsChecked] = useState(false);
+    const initialState = {
+        coffee: false,
+        tea: false,
+        matcha: false
+    };
+    const [checkboxesState, setCheckboxesState] = useState(initialState);
 
-    const toggleCheckbox = () => {
-      setIsChecked((prevState) => !prevState);
+    const toggleCheckbox = (checkboxKey) => {
+        setCheckboxesState((prevState) => {
+            return {
+              ...initialState,
+              [checkboxKey]: !prevState[checkboxKey]
+            };
+        });
     };
 
-   const handleKeyDown = (e) => {
-       if (e.key === 'Space' || e.key === ' ') {
-           e.preventDefault();
-           toggleCheckbox();
-       }
-   };
+    const handleKeyDown = (e, checkboxKey) => {
+        if (e.key === 'Space' || e.key === ' ') {
+            e.preventDefault();
+            toggleCheckbox(checkboxKey);
+        }
+    };
 
     return (
         <div className="card">
-            <h1 id="id-group-label">Settings</h1>
+            <h1 id="checkbox-group-label">Drinks I wanna drink today</h1>
             <div
-                role="checkbox"
-                aria-checked={isChecked}
-                tabIndex="0"
-                aria-labelledby="id-group-label"
-                onClick={toggleCheckbox}
-                onKeyDown={handleKeyDown}
+                role="group"
+                aria-labelledby="checkbox-group-label"
             >
-                <span className="checkbox-visual"></span>
-                <span className="checkbox-label"> Enable dark mode</span>
+                {Object.entries(checkboxesState).map(([key, value]) => (
+                    <div
+                        key={key}
+                        role="checkbox"
+                        aria-checked={value}
+                        tabIndex="0"
+                        onClick={() => toggleCheckbox(key)}
+                        onKeyDown={(e) => handleKeyDown(e, key)}
+                    >
+                        <span className="checkbox-visual"></span>
+                        <span className="checkbox-label">{key}</span>
+                    </div>
+                ))}
             </div>
         </div>
     );
